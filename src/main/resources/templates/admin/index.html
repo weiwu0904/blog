@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/_fragments.html :: head('博客管理')">
+</head>
+<body>
+  <!--导航-->
+  <nav th:replace="admin/_fragments :: menu(0)">
+  </nav>
+
+
+  <!--中间内容-->
+  <div  class="m-container-small m-padded-tb-big">
+    <div class="ui container">
+      <div class="ui success large  message">
+        <h3>Hi,</h3>
+        <p>李仁密，欢迎登录！</p>
+      </div>
+
+      <img src="https://unsplash.it/1000/400?image=1005" alt="" class="ui rounded bordered fluid image">
+    </div>
+  </div>
+
+  <br>
+  <br>
+
+  <!--底部footer-->
+  <footer th:replace="admin/_fragments.html :: footer">
+  </footer>
+
+
+  <th:block th:replace="admin/_fragments :: script">
+  </th:block>
+  <script>
+    $('.menu.toggle').click(function () {
+      $('.m-item').toggleClass('m-mobile-hide');
+    });
+
+    $('.ui.dropdown').dropdown({
+      on : 'hover'
+    });
+
+  </script>
+</body>
+</html>

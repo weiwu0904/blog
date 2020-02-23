@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_fragments.html :: head('500')">
+</head>
+<body>
+
+<!--导航-->
+<nav th:replace="_fragments.html :: nav(0)">
+</nav>
+
+<br>
+<br>
+<br>
+
+<!--非controller的异常，会走到这里，如thyleaf模版出问题-->
+
+<div class="m-container-small m-padded-tb-massive">
+    <div class="ui error message m-padded-tb-huge" >
+        <div class="ui contianer">
+            <h2>错误</h2>
+            <p>对不起，服务异常，请联系管理员</p>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+
+
+<footer th:replace="_fragments.html :: footer">
+</footer>
+
+</body>
+</html>
