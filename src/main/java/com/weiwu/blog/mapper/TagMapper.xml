@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weiwu.blog.mapper.TagMapper">
+
+    <resultMap id="baseTypeMap" type="com.weiwu.blog.domain.Tag">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+    </resultMap>
+
+    <sql id="baseColum">
+        id, name
+    </sql>
+
+    <insert id="saveTag" parameterType="com.weiwu.blog.domain.Tag"  keyColumn="id"  keyProperty="id" useGeneratedKeys="true">
+        insert into t_tag (name) values (#{name})
+    </insert>
+
+    <select id="getTagById" parameterType="long" resultMap="baseTypeMap">
+        select <include refid="baseColum"/> from t_tag where id = #{id}
+    </select>
+
+    <select id="getTagByName" parameterType="string" resultMap="baseTypeMap">
+        select <include refid="baseColum"/> from t_tag where name = #{name}
+    </select>
+
+    <select id="list" resultMap="baseTypeMap">
+        select <include refid="baseColum"/> from t_tag
+    </select>
+
+
+    <update id="updateTag" parameterType="com.weiwu.blog.domain.Tag">
+        update t_tag set  name = #{name} where id = #{id}
+    </update>
+
+
+    <delete id="deleteTag" parameterType="long">
+        delete  from t_tag where id = #{id}
+    </delete>
+
+</mapper>

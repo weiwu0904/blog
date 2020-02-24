@@ -23,6 +23,10 @@ public class UserController {
                           HttpSession session,
                           RedirectAttributes redirectAttributes) {
 
+        if (username == null || password == null) {
+            return setErrorPage(redirectAttributes,"用户名或密码不能为空");
+        }
+
         User user = userService.login(username, password);
         if (user != null) {
             user.setPassword(null);
@@ -30,8 +34,7 @@ public class UserController {
             return "redirect:/admin/index";
         }
 
-        redirectAttributes.addFlashAttribute("message","用户名或密码错误");
-        return "redirect:/admin";
+        return setErrorPage(redirectAttributes,"用户名或密码错误");
     }
 
 
@@ -39,6 +42,13 @@ public class UserController {
     public String logout(HttpSession session) {
 
         session.removeAttribute("user");
+        return "redirect:/admin";
+    }
+
+
+    private String setErrorPage(RedirectAttributes redirectAttributes, String message) {
+
+        redirectAttributes.addFlashAttribute("message",message);
         return "redirect:/admin";
     }
 }

@@ -11,5 +11,6 @@ public interface UserMapper {
      * @param password
      * @return
      */
-    User findByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
+    User findByUsernameAndPassword(@Param("username") String username,
+                                   @Param("password") String password);
 }

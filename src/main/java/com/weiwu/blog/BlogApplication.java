@@ -7,7 +7,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
-@MapperScan(basePackages = "com.weiwu.blog.mapper")
+@MapperScan("com.weiwu.blog.mapper")
 @EnableTransactionManagement
 @EnableAspectJAutoProxy
 public class BlogApplication {

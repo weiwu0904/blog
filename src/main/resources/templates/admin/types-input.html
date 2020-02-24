@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="admin/_fragments.html :: head('分类新增')">\
+<head th:replace="admin/_fragments.html :: head('分类新增')">
 </head>
 <body>
 
@@ -19,7 +19,8 @@
   <!--中间内容-->
   <div  class="m-container-small m-padded-tb-big">
     <div class="ui container">
-      <form action="#" method="post"  th:object="${type}" th:action="*{id}==null ? @{/admin/types} : @{/admin/types/{id}(id=*{id})} "  class="ui form">
+<!--      <form method="post"  th:object="${type}" th:action="*{id}==null ? @{/admin/types} : @{/admin/types/{id}(id=*{id})}"  class="ui form">-->
+      <form method="post" th:action="@{/admin/types/save}" th:object="${type}" class="ui form">
         <input type="hidden" name="id" th:value="*{id}">
         <div class=" field">
           <div class="ui left labeled input">
@@ -29,13 +30,6 @@
         </div>
 
         <div class="ui error message"></div>
-        <!--/*/
-        <div class="ui negative message" th:if="${#fields.hasErrors('name')}"  >
-          <i class="close icon"></i>
-          <div class="header">验证失败</div>
-          <p th:errors="*{name}">提交信息不符合规则</p>
-        </div>
-         /*/-->
         <div class="ui right aligned container">
           <button type="button" class="ui button" onclick="window.history.go(-1)" >返回</button>
           <button class="ui teal submit button">提交</button>
