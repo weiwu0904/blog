@@ -4,6 +4,8 @@ import com.github.pagehelper.PageInfo;
 import com.weiwu.blog.domain.Type;
 import com.weiwu.blog.exception.ServiceException;
 
+import java.util.List;
+
 public interface TypeService {
 
     /**
@@ -25,6 +27,12 @@ public interface TypeService {
      * @return
      */
     PageInfo<Type> list(int page, int pageNum);
+
+    /**
+     * 查询所有分类
+     * @return
+     */
+    List<Type> listAll();
 
 
     /**

@@ -48,6 +48,11 @@ public class TypeServiceImpl implements TypeService {
     }
 
     @Override
+    public List<Type> listAll() {
+        return typeMapper.list();
+    }
+
+    @Override
     @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.SUPPORTS)
     public Type updateType(Type type) {
         typeMapper.updateType(type);

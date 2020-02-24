@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weiwu.blog.mapper.BlogMapper">
+
+    <resultMap id="baseBlogMap" type="com.weiwu.blog.domain.Blog">
+        <id ></id>
+        <result column=""
+    </resultMap>
+
+
+
+    <sql id="baseBlogColumn">
+        `id`, `title`, `content`, `first_picture`, `flag`,
+        `views`, `appreciate_flag`, `share_flag`, `comment_flag`,
+        `published_falg`, `recommend_flag`, `type_id`, `user_id`, `update_time`, `create_time`
+    </sql>
+
+    <insert id="saveBlog" parameterType="com.weiwu.blog.domain.Blog"  keyColumn="id"  keyProperty="id" useGeneratedKeys="true">
+        insert into t_blog (name) values (#{name})
+    </insert>
+
+    <select id="getBlogById" parameterType="long" resultMap="baseBlogMap">
+        select <include refid="baseColum"/> from t_blog where id = #{id}
+    </select>
+
+
+    <select id="list" resultMap="baseBlogMap">
+        select <include refid="baseColum"/> from t_blog
+    </select>
+
+    <select id="listByAdminBlogReq" resultType="com.weiwu.blog.domain.Blog" parameterType="com.weiwu.blog.req.AdminBlogReq">
+
+    </select>
+
+
+    <update id="updateBlog" parameterType="com.weiwu.blog.domain.Blog">
+        update t_blog set  name = #{name} where id = #{id}
+    </update>
+
+
+    <delete id="deleteBlog" parameterType="long">
+        delete  from t_blog where id = #{id}
+    </delete>
+
+</mapper>
