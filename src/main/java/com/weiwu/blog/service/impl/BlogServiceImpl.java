@@ -104,4 +104,12 @@ public class BlogServiceImpl implements BlogService {
         PageInfo<Blog> pageInfo = new PageInfo<>(list);
         return pageInfo;
     }
+
+    @Override
+    public PageInfo<Blog> searchBlogList(String query, int nowPage, int pageNum) {
+        PageHelper.startPage(nowPage, pageNum);
+        List<Blog> list = blogMapper.searchBlogList(query);
+        PageInfo<Blog> pageInfo = new PageInfo<>(list);
+        return pageInfo;
+    }
 }

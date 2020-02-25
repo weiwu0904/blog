@@ -54,4 +54,11 @@ public interface BlogMapper {
      * @return
      */
     List<Blog> indexRecommendBlogList();
+
+    /**
+     * 首页内容搜索博客查询
+     * @param query
+     * @return
+     */
+    List<Blog> searchBlogList(String query);
 }

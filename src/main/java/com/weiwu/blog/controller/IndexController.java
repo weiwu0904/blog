@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -40,6 +41,16 @@ public class IndexController {
         model.addAttribute("types",typePageInfo.getList());
         model.addAttribute("tags",tagPageInfo.getList());
         return "index";
+    }
+
+    @GetMapping("/search")
+    public String search(@RequestParam(name = "nowPage",defaultValue = "1") int nowPage,
+                         @RequestParam(name = "pageNum", defaultValue = "10") int pageNum,
+                         @RequestParam String query,
+                         Model model) {
+        PageInfo<Blog> blogPageInfo = blogService.searchBlogList(query,nowPage, pageNum);
+        model.addAttribute("page",blogPageInfo);
+        return "search";
     }
 
 }

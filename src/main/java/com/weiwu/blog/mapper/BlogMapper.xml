@@ -127,6 +127,30 @@
         ORDER BY blog.views DESC, blog.update_time DESC
     </select>
 
+    <select id="searchBlogList" resultMap="blogBaseMap">
+        SELECT
+            blog.id AS id,
+            blog.title AS title,
+            blog.description AS description,
+            blog.first_picture AS first_picture,
+            blog.update_time AS update_time,
+            blog.views AS views,
+            type.id AS typeId,
+            type.`name` AS typeName,
+            u.avatar AS userAvatar,
+            u.nickname AS userNickname
+        FROM
+            t_blog blog
+            LEFT JOIN t_type type ON blog.type_id = type.id
+            LEFT JOIN t_user u ON blog.user_id = u.id
+        WHERE
+            blog.title LIKE CONCAT('%',#{query},'%')
+            OR blog.content LIKE CONCAT('%',#{query},'%')
+        ORDER BY
+            blog.views DESC,
+            blog.update_time DESC
+    </select>
+
 
     <delete id="deleteBlog" parameterType="long">
         delete  from t_blog where id = #{id}
@@ -142,5 +166,6 @@
         ORDER BY
             update_time
     </select>
+
 
 </mapper>

@@ -53,4 +53,12 @@ public interface BlogService {
      * @return
      */
     PageInfo<Blog> indexRecommendBlogList(int nowPage, int pageNum);
+
+    /**
+     * 首页博客搜索
+     * @param nowPage
+     * @param pageNum
+     * @return
+     */
+    PageInfo<Blog> searchBlogList(String query,int nowPage, int pageNum);
 }
