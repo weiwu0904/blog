@@ -1,20 +1,45 @@
 package com.weiwu.blog.controller;
 
+import com.github.pagehelper.PageInfo;
+import com.weiwu.blog.domain.Blog;
+import com.weiwu.blog.domain.Tag;
+import com.weiwu.blog.domain.Type;
+import com.weiwu.blog.service.BlogService;
+import com.weiwu.blog.service.TagService;
+import com.weiwu.blog.service.TypeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class IndexController {
 
+    @Autowired
+    private BlogService blogService;
+
+    @Autowired
+    private TypeService typeService;
+
+    @Autowired
+    private TagService tagService;
+
+
     @GetMapping("/")
-    String index() {
-        int a = 1/0;
+    String index(@RequestParam(name = "nowPage",defaultValue = "1") int nowPage,
+                 @RequestParam(name = "pageNum", defaultValue = "10") int pageNum,
+                 Model model) {
+
+        PageInfo<Blog> blogPageInfo = blogService.indexList(nowPage, pageNum);
+        PageInfo<Type> typePageInfo = typeService.indexTypeTopList(1, 6);
+        PageInfo<Tag> tagPageInfo = tagService.indexTagTopList(1, 10);
+        PageInfo<Blog> recommendBlogPageInfo = blogService.indexRecommendBlogList(1, 10);
+
+        model.addAttribute("page",blogPageInfo);
+        model.addAttribute("types",typePageInfo.getList());
+        model.addAttribute("tags",tagPageInfo.getList());
         return "index";
     }
 
-    @GetMapping("/aa")
-    String aa() {
-
-        return "index";
-    }
 }

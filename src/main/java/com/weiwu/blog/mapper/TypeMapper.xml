@@ -39,4 +39,18 @@
         delete  from t_type where id = #{id}
     </delete>
 
+    <select id="indexTypeTopList" resultMap="baseTypeMap">
+        SELECT
+            blog.type_id AS id,
+            type.`name` AS `name`,
+            COUNT( * ) AS blogCount
+        FROM
+            t_blog blog
+            LEFT JOIN t_type type ON type.id = blog.type_id
+        GROUP BY
+            blog.type_id
+        ORDER BY
+            blogCount DESC
+    </select>
+
 </mapper>

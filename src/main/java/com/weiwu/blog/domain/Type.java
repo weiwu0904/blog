@@ -14,4 +14,9 @@ public class Type {
     /// 分类的名称
     @NotBlank(message = "分类名称不能为空")
     private String name;
+
+
+    // 拥有博客的数量，给首页展示用的
+    private Integer blogCount;
+
 }

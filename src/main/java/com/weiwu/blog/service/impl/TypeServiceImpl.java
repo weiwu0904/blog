@@ -64,4 +64,12 @@ public class TypeServiceImpl implements TypeService {
     public void deleteType(Long id) {
         typeMapper.deleteType(id);
     }
+
+    @Override
+    public PageInfo<Type> indexTypeTopList(int nowPage, int pageNum) {
+        PageHelper.startPage(nowPage, pageNum);
+        List<Type> list = typeMapper.indexTypeTopList();
+        PageInfo<Type> pageInfo = new PageInfo<>(list);
+        return pageInfo;
+    }
 }

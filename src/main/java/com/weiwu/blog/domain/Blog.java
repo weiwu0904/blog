@@ -87,6 +87,39 @@ public class Blog {
      */
     private User user;
 
+    /**
+     * 博客编辑时候使用的
+     */
+    private String tagIds;
+
+    public void init() {
+        this.tagIds = tagsToIds(this.getTagList());
+    }
+
+    //1,2,3
+    private String tagsToIds(List<Tag> tags) {
+        if (!tags.isEmpty()) {
+            StringBuffer ids = new StringBuffer();
+            boolean flag = false;
+            for (Tag tag : tags) {
+                if (flag) {
+                    ids.append(",");
+                } else {
+                    flag = true;
+                }
+                ids.append(tag.getId());
+            }
+            return ids.toString();
+        } else {
+            return tagIds;
+        }
+    }
+
+    /**
+     * 博客编辑时候使用
+     */
+    private String description;
+
 
     private LocalDateTime createTime;
     private LocalDateTime updateTime;

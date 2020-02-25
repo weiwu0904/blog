@@ -44,4 +44,17 @@ public interface TagMapper {
      * @return
      */
     Tag getTagByName(String name);
+
+    /**
+     * 根据博客ID查询 标签
+     * @param id
+     * @return
+     */
+    List<Tag> getTagByBlogId(Long id);
+
+    /**
+     * 首页根据 博客标签的数量排序查询
+     * @return
+     */
+    List<Tag> indexTagTopList();
 }

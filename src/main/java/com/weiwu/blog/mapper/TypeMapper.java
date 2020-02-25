@@ -45,4 +45,11 @@ public interface TypeMapper {
      * @return
      */
     Type getTypeByName(String name);
+
+
+    /**
+     * 首页展示的分类排行（根据博客属于这个分类的数量）
+     * @return
+     */
+    List<Type> indexTypeTopList();
 }

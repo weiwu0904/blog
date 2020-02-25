@@ -14,10 +14,12 @@ public interface BlogService {
     Blog getBlog(Long id);
 
     /**
-     * 查询博客列表
+     * 查询首页博客列表VO
+     * @param nowPage
+     * @param pageNum
      * @return
      */
-    PageInfo<Blog> adminList(int nowPage, int pageNum);
+    PageInfo<Blog> indexList(int nowPage, int pageNum);
 
     /**
      * 根据条件分页查询博客数据
@@ -35,7 +37,7 @@ public interface BlogService {
      * @param blog
      * @return
      */
-    int updateBlog(Blog blog);
+    void updateBlog(Blog blog);
 
     /**
      * 删除博客
@@ -43,4 +45,12 @@ public interface BlogService {
      * @return
      */
     int deleteBlog(Long id);
+
+    /**
+     * 首页被推荐的博客列表
+     * @param nowPage
+     * @param pageNum
+     * @return
+     */
+    PageInfo<Blog> indexRecommendBlogList(int nowPage, int pageNum);
 }

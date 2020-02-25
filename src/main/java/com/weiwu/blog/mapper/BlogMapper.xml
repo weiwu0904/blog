@@ -4,44 +4,143 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.weiwu.blog.mapper.BlogMapper">
 
-    <resultMap id="baseBlogMap" type="com.weiwu.blog.domain.Blog">
-        <id ></id>
-        <result column=""
+    <resultMap id="blogBaseMap" type="com.weiwu.blog.domain.Blog">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="first_picture" property="firstPicture"/>
+        <result column="flag" property="flag"/>
+        <result column="views" property="views"/>
+        <result column="appreciate_flag" property="appreciateFlag"/>
+        <result column="share_flag" property="shareFlag"/>
+        <result column="comment_flag" property="commentFlag"/>
+        <result column="published_falg" property="publishedFalg"/>
+        <result column="recommend_flag" property="recommendFlag"/>
+        <result column="description" property="description"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_time" property="createTime"/>
+
+        <association property="type" javaType="com.weiwu.blog.domain.Type" >
+            <id column="typeId" property="id"/>
+            <id column="typeName" property="name"/>
+        </association>
+
+        <association property="user" javaType="com.weiwu.blog.domain.User">
+            <id column="userId" property="id"/>
+            <id column="userNickname" property="nickname"/>
+            <id column="userAvatar" property="avatar"/>
+            <id column="userEmail" property="email"/>
+        </association>
     </resultMap>
 
 
-
-    <sql id="baseBlogColumn">
-        `id`, `title`, `content`, `first_picture`, `flag`,
-        `views`, `appreciate_flag`, `share_flag`, `comment_flag`,
-        `published_falg`, `recommend_flag`, `type_id`, `user_id`, `update_time`, `create_time`
-    </sql>
-
-    <insert id="saveBlog" parameterType="com.weiwu.blog.domain.Blog"  keyColumn="id"  keyProperty="id" useGeneratedKeys="true">
-        insert into t_blog (name) values (#{name})
+    <insert id="saveBlog" parameterType="com.weiwu.blog.domain.Blog" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO
+            `t_blog`(`title`, `content`, `first_picture`, `flag`, `views`, `appreciate_flag`, `share_flag`, `comment_flag`, `published_falg`, `recommend_flag`, `type_id`, `user_id`, `description`,`update_time`, `create_time`)
+        VALUES
+            (#{title}, #{content}, #{firstPicture}, #{flag}, #{views}, #{appreciateFlag}, #{shareFlag}, #{commentFlag}, #{publishedFalg}, #{recommendFlag}, #{type.id}, #{user.id}, #{description}, #{updateTime}, #{createTime})
     </insert>
 
-    <select id="getBlogById" parameterType="long" resultMap="baseBlogMap">
-        select <include refid="baseColum"/> from t_blog where id = #{id}
+    <select id="getBlogById" parameterType="long" resultMap="blogBaseMap">
+        SELECT
+            `id`,
+            `title`,
+            `content`,
+            `first_picture`,
+            `flag`,
+            `views`,
+            `appreciate_flag`,
+            `share_flag`,
+            `comment_flag`,
+            `published_falg`,
+            `recommend_flag`,
+            `type_id`,
+            `user_id`,
+            `description`,
+            `update_time`,
+            `create_time`
+        FROM
+            t_blog
+        WHERE
+            id = #{id}
     </select>
 
-
-    <select id="list" resultMap="baseBlogMap">
-        select <include refid="baseColum"/> from t_blog
-    </select>
-
-    <select id="listByAdminBlogReq" resultType="com.weiwu.blog.domain.Blog" parameterType="com.weiwu.blog.req.AdminBlogReq">
-
+    <select id="listByAdminBlogReq" resultMap="blogBaseMap" parameterType="com.weiwu.blog.req.AdminBlogReq">
+        SELECT
+            blog.id AS id,
+            blog.title AS title,
+            blog.recommend_flag AS recommend_flag,
+            blog.published_falg AS published_falg,
+            blog.update_time AS update_time,
+            type.id AS typeId,
+            type.`name` AS typeName
+        FROM
+            t_blog blog
+            LEFT JOIN t_type type ON blog.type_id = type.id
+        <where>
+            <if test="title != null and title != ''">
+                AND blog.title LIKE CONCAT( '%', #{title}, '%' )
+            </if>
+            <if test="typeId != null and typeId != ''">
+                AND type.id = #{typeId}
+            </if>
+            <if test="recommend != null and recommend != ''">
+                AND blog.recommend_flag = #{recommend}
+            </if>
+        </where>
     </select>
 
 
     <update id="updateBlog" parameterType="com.weiwu.blog.domain.Blog">
-        update t_blog set  name = #{name} where id = #{id}
+        UPDATE `t_blog` SET
+            `title` = #{title},
+            `content` = #{content},
+            `first_picture` = #{firstPicture},
+            `flag` = #{flag},
+            `appreciate_flag` = #{appreciateFlag},
+            `share_flag` = #{shareFlag},
+            `comment_flag` = #{commentFlag},
+            `recommend_flag` = #{recommendFlag},
+            `type_id` = #{type.id},
+            `description` = #{description},
+            `update_time` = #{updateTime}
+        WHERE
+            `id` = #{id}
     </update>
+
+    <select id="indexList" resultMap="blogBaseMap">
+        SELECT
+            blog.id AS id,
+            blog.title AS title,
+            blog.description AS description,
+            blog.first_picture AS first_picture,
+            blog.update_time AS update_time,
+            blog.views AS views,
+            type.id AS typeId,
+            type.`name` AS typeName,
+            u.avatar AS userAvatar,
+            u.nickname AS userNickname
+        FROM
+            t_blog blog
+            LEFT JOIN t_type type ON blog.type_id = type.id
+            LEFT JOIN t_user u ON blog.user_id = u.id
+        ORDER BY blog.views DESC, blog.update_time DESC
+    </select>
 
 
     <delete id="deleteBlog" parameterType="long">
         delete  from t_blog where id = #{id}
     </delete>
+
+    <select id="indexRecommendBlogList" resultMap="blogBaseMap">
+        SELECT
+            title
+        FROM
+            t_blog
+        WHERE
+            recommend_flag = TRUE
+        ORDER BY
+            update_time
+    </select>
 
 </mapper>

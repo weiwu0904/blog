@@ -2,7 +2,6 @@ package com.weiwu.blog.mapper;
 
 import com.weiwu.blog.domain.Blog;
 import com.weiwu.blog.req.AdminBlogReq;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,12 +15,6 @@ public interface BlogMapper {
     Blog getBlogById(Long id);
 
     /**
-     * 列表查询
-     * @return
-     */
-    List<Blog> list();
-
-    /**
      * 根据条件查询博客列表
      */
     List<Blog> listByAdminBlogReq(AdminBlogReq blogReq);
@@ -31,7 +24,7 @@ public interface BlogMapper {
      * @param blog
      * @return
      */
-    Blog saveBlog(Blog blog);
+    int saveBlog(Blog blog);
 
 
     /**
@@ -50,4 +43,15 @@ public interface BlogMapper {
     int deleteBlog(Long id);
 
 
+    /**
+     * 查询首页博客的VO
+     * @return
+     */
+    List<Blog> indexList();
+
+    /**
+     * 首页推荐博客列表
+     * @return
+     */
+    List<Blog> indexRecommendBlogList();
 }

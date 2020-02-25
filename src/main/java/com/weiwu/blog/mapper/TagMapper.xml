@@ -4,9 +4,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.weiwu.blog.mapper.TagMapper">
 
-    <resultMap id="baseTypeMap" type="com.weiwu.blog.domain.Tag">
+    <resultMap id="baseTagMap" type="com.weiwu.blog.domain.Tag">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
+        <result column="blogCount" property="blogCount"/>
     </resultMap>
 
     <sql id="baseColum">
@@ -17,15 +18,15 @@
         insert into t_tag (name) values (#{name})
     </insert>
 
-    <select id="getTagById" parameterType="long" resultMap="baseTypeMap">
+    <select id="getTagById" parameterType="long" resultMap="baseTagMap">
         select <include refid="baseColum"/> from t_tag where id = #{id}
     </select>
 
-    <select id="getTagByName" parameterType="string" resultMap="baseTypeMap">
+    <select id="getTagByName" parameterType="string" resultMap="baseTagMap">
         select <include refid="baseColum"/> from t_tag where name = #{name}
     </select>
 
-    <select id="list" resultMap="baseTypeMap">
+    <select id="list" resultMap="baseTagMap">
         select <include refid="baseColum"/> from t_tag
     </select>
 
@@ -38,5 +39,30 @@
     <delete id="deleteTag" parameterType="long">
         delete  from t_tag where id = #{id}
     </delete>
+
+    <select id="getTagByBlogId" parameterType="long" resultMap="baseTagMap">
+        SELECT
+            tag.id AS id,
+            tag.`name` AS NAME
+        FROM
+            t_tag tag
+            RIGHT JOIN t_blog_tag bt ON tag.id = bt.tag_id
+        WHERE
+            bt.blog_id = #{id}
+    </select>
+
+    <select id="indexTagTopList" resultMap="baseTagMap">
+        SELECT
+            tbt.tag_id AS id,
+            tt.`name` AS `name`,
+            COUNT( * ) AS blogCount
+        FROM
+            t_blog_tag tbt
+            LEFT JOIN t_tag tt ON tbt.tag_id = tt.id
+        GROUP BY
+            tbt.tag_id
+        ORDER BY
+            blogCount DESC
+    </select>
 
 </mapper>

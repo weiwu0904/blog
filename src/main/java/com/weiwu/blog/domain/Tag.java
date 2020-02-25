@@ -16,4 +16,9 @@ public class Tag {
      * 标签名称
      */
     private String name;
+
+    /**
+     * 首页展示用，博客的数量
+     */
+    private Integer blogCount;
 }

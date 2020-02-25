@@ -46,6 +46,12 @@ public class TagServiceImpl implements TagService {
 
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.SUPPORTS)
+    public List<Tag> list() {
+        return tagMapper.list();
+    }
+
+    @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.SUPPORTS)
     public PageInfo<Tag> listTag(int page, int pageNum) {
         PageHelper.startPage(page, pageNum);
         List<Tag> list = tagMapper.list();
@@ -64,5 +70,13 @@ public class TagServiceImpl implements TagService {
     @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
     public void deleteTag(Long id) {
         tagMapper.deleteTag(id);
+    }
+
+    @Override
+    public PageInfo<Tag> indexTagTopList(int nowPage, int pageNum) {
+        PageHelper.startPage(nowPage, pageNum);
+        List<Tag> list = tagMapper.indexTagTopList();
+        PageInfo<Tag> pageInfo = new PageInfo<>(list);
+        return pageInfo;
     }
 }
