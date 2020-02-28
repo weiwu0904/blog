@@ -167,5 +167,77 @@
             update_time
     </select>
 
+    <select id="getBlogDetailById" parameterType="long" resultMap="blogBaseMap">
+        SELECT
+            blog.id AS id,
+            blog.title AS title,
+            blog.content AS content,
+            blog.description AS description,
+            blog.first_picture AS first_picture,
+            blog.flag AS flag,
+            blog.update_time AS update_time,
+            blog.views AS views,
+            blog.appreciate_flag AS appreciate_flag,
+            blog.share_flag AS share_flag,
+            blog.comment_flag AS comment_flag,
+            blog.recommend_flag AS recommend_flag,
+            type.id AS typeId,
+            type.`name` AS typeName,
+            u.avatar AS userAvatar,
+            u.nickname AS userNickname,
+            u.email AS userEamil
+        FROM
+            t_blog blog
+            LEFT JOIN t_type type ON blog.type_id = type.id
+            LEFT JOIN t_user u ON blog.user_id = u.id
+        WHERE
+            blog.id = #{id}
+    </select>
+
+    <select id="findGroupYear" resultType="string">
+        SELECT
+            DATE_FORMAT(b.create_time, '%Y' ) AS `year`
+        FROM
+            t_blog b
+        GROUP BY `year`
+        ORDER BY `year` DESC
+    </select>
+
+    <select id="getBlogByYear" resultMap="blogBaseMap">
+        SELECT
+            blog.id AS id,
+            blog.title AS title,
+            blog.flag AS flag,
+            blog.create_time AS create_time
+        FROM
+            t_blog blog
+        WHERE
+            DATE_FORMAT( blog.create_time, '%Y' ) = #{year}
+    </select>
+
+    <select id="getBlogCount" resultType="integer">
+        SELECT COUNT(*) FROM t_blog
+    </select>
+
+    <select id="indexListByType" resultMap="blogBaseMap">
+        SELECT
+            blog.id AS id,
+            blog.title AS title,
+            blog.description AS description,
+            blog.first_picture AS first_picture,
+            blog.update_time AS update_time,
+            blog.views AS views,
+            type.id AS typeId,
+            type.`name` AS typeName,
+            u.avatar AS userAvatar,
+            u.nickname AS userNickname
+        FROM
+            t_blog blog
+            LEFT JOIN t_type type ON blog.type_id = type.id
+            LEFT JOIN t_user u ON blog.user_id = u.id
+         WHERE type.id = #{typeId}
+        ORDER BY blog.views DESC, blog.update_time DESC
+    </select>
+
 
 </mapper>

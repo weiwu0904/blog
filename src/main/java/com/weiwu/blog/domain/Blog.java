@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.swing.text.StyledEditorKit;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -123,4 +124,11 @@ public class Blog {
 
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
+
+
+    // 给页面使用的
+    public String getArchiveDay() {
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("MM月dd");
+        return df.format(this.createTime);
+    }
 }

@@ -61,4 +61,38 @@ public interface BlogMapper {
      * @return
      */
     List<Blog> searchBlogList(String query);
+
+
+    /**
+     * 获取详情页博客详情
+     * @param id
+     * @return
+     */
+    Blog getBlogDetailById(Long id);
+
+    /**
+     * 查询博客年份分组
+     * @return
+     */
+    List<String> findGroupYear();
+
+    /**
+     * 查询年份的博客
+     * @param year
+     * @return
+     */
+    List<Blog> getBlogByYear(String year);
+
+    /**
+     * 查询博客总数
+     * @return
+     */
+    Integer getBlogCount();
+
+    /**
+     * 分类列表blog，根据分类查询
+     * @param typeId
+     * @return
+     */
+    List<Blog> indexListByType(Long typeId);
 }

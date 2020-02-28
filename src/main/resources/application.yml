@@ -28,6 +28,9 @@ spring:
 #      # 数据库连接超时时间,默认30秒，即30000
 #      connection-timeout: 60000
 
+## 评论者的默认头像
+comments:
+  avatar: /images/avatar.jpeg
 
 mybatis:
   type-aliases-package: com.weiwu.blog.domain

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weiwu.blog.mapper.CommentMapper">
+
+    <resultMap id="baseCommentMap" type="com.weiwu.blog.domain.Comment">
+        <id column="id" property="id"/>
+        <result column="nickname" property="nickname"/>
+        <result column="email" property="email"/>
+        <result column="content" property="content"/>
+        <result column="avatar" property="avatar"/>
+        <result column="createTime" property="createTime"/>
+        <association property="blog" javaType="com.weiwu.blog.domain.Blog">
+            <id column="blogId" property="id"/>
+        </association>
+        <association property="parentComment" javaType="com.weiwu.blog.domain.Comment">
+            <id column="parentId" property="id"/>
+            <result column="parentNickname" property="nickname"/>
+            <result column="parentEmail" property="email"/>
+            <result column="parentContent" property="content"/>
+            <result column="parentAvatar" property="avatar"/>
+            <result column="parentCreateTime" property="createTime"/>
+        </association>
+        <association property="atComment" javaType="com.weiwu.blog.domain.Comment">
+            <id column="atId" property="id"/>
+            <result column="atNickname" property="nickname"/>
+            <result column="atEmail" property="email"/>
+            <result column="atContent" property="content"/>
+            <result column="atAvatar" property="avatar"/>
+            <result column="atCreateTime" property="createTime"/>
+        </association>
+    </resultMap>
+
+    <select id="listByBlogId" parameterType="long" resultMap="baseCommentMap">
+        SELECT
+            c.id AS id,
+            c.nickname AS nickname,
+            c.email AS email,
+            c.content AS content,
+            c.avatar AS avatar,
+            c.create_time AS createTime,
+            c.blog_id AS blogId,
+            pc.id AS parentId,
+            pc.nickname AS parentNickname,
+            pc.email AS parentEmail,
+            pc.content AS parentContent,
+            pc.avatar AS parentAvatar,
+            pc.create_time AS parentCreateTime,
+            atc.id AS atId,
+            atc.nickname AS atNickname,
+            atc.email AS atEmail,
+            atc.content AS atContent,
+            atc.avatar AS atAvatar,
+            atc.create_time AS atCreateTime
+        FROM
+            t_comment c
+            LEFT JOIN t_comment pc ON c.parent_comment_id = pc.id
+            LEFT JOIN t_comment atc ON c.at_comment_id = atc.id
+        WHERE
+            c.blog_id = #{blogId}
+    </select>
+
+    <insert id="saveComment" parameterType="com.weiwu.blog.domain.Comment" keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        INSERT INTO t_comment (
+            `nickname`,
+            `email`,
+            `content`,
+            `avatar`,
+            `create_time`,
+            `blog_id`,
+            admin_comment,
+            `parent_comment_id`,
+            at_comment_id
+        )
+        VALUES
+           (#{nickname},
+            #{email},
+            #{content},
+            #{avatar},
+            #{createTime},
+            #{blog.id},
+            #{adminComment},
+            #{parentComment.id},
+            #{atComment.id}
+            )
+    </insert>
+
+    <select id="getCommentById" resultMap="baseCommentMap">
+        SELECT
+            id AS id,
+            nickname AS nickname,
+            email AS email,
+            content AS content,
+            avatar AS avatar,
+            create_time AS createTime,
+            parent_comment_id AS parentCommentId
+        FROM
+            t_comment
+        WHERE
+            id = #{id}
+    </select>
+
+</mapper>

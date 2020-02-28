@@ -9,6 +9,7 @@ import com.weiwu.blog.mapper.BlogTagMapper;
 import com.weiwu.blog.mapper.TagMapper;
 import com.weiwu.blog.req.AdminBlogReq;
 import com.weiwu.blog.service.BlogService;
+import com.weiwu.blog.uitl.MarkdownUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -16,7 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class BlogServiceImpl implements BlogService {
@@ -49,6 +53,14 @@ public class BlogServiceImpl implements BlogService {
     public PageInfo<Blog> indexList(int nowPage, int pageNum) {
         PageHelper.startPage(nowPage, pageNum);
         List<Blog> blogListVOList = blogMapper.indexList();
+        PageInfo<Blog> pageInfo = new PageInfo<>(blogListVOList);
+        return pageInfo;
+    }
+
+    @Override
+    public PageInfo<Blog> indexListByType(int nowPage, int pageNum, Long typeId) {
+        PageHelper.startPage(nowPage, pageNum);
+        List<Blog> blogListVOList = blogMapper.indexListByType(typeId);
         PageInfo<Blog> pageInfo = new PageInfo<>(blogListVOList);
         return pageInfo;
     }
@@ -111,5 +123,31 @@ public class BlogServiceImpl implements BlogService {
         List<Blog> list = blogMapper.searchBlogList(query);
         PageInfo<Blog> pageInfo = new PageInfo<>(list);
         return pageInfo;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS, isolation = Isolation.READ_COMMITTED)
+    public Blog getBlogDetail(Long id) {
+        Blog blog = blogMapper.getBlogDetailById(id);
+        List<Tag> tagList = tagMapper.getTagByBlogId(id);
+        blog.setTagList(tagList);
+        String htmlContent = MarkdownUtils.markdownToHtmlExtensions(blog.getContent());
+        blog.setContent(htmlContent);
+        return blog;
+    }
+
+    @Override
+    public Map<String, List<Blog>> archiveBlog() {
+        List<String> years = blogMapper.findGroupYear();
+        Map<String, List<Blog>> map = new LinkedHashMap<>();
+        for (String year : years) {
+            map.put(year, blogMapper.getBlogByYear(year));
+        }
+        return map;
+    }
+
+    @Override
+    public Integer countBlog() {
+        return blogMapper.getBlogCount();
     }
 }

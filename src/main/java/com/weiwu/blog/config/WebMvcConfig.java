@@ -13,6 +13,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry) {
         //后台登陆页
         registry.addViewController("/admin").setViewName("/admin/login");
+        registry.addViewController("/admin/").setViewName("/admin/login");
         registry.addViewController("/admin/login").setViewName("/admin/login");
 
         // 映射后台首页，登陆成功后跳转

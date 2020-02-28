@@ -4,6 +4,9 @@ import com.github.pagehelper.PageInfo;
 import com.weiwu.blog.domain.Blog;
 import com.weiwu.blog.req.AdminBlogReq;
 
+import java.util.List;
+import java.util.Map;
+
 public interface BlogService {
 
     /**
@@ -20,6 +23,14 @@ public interface BlogService {
      * @return
      */
     PageInfo<Blog> indexList(int nowPage, int pageNum);
+
+    /**
+     * 查询首页博客列表VO
+     * @param nowPage
+     * @param pageNum
+     * @return
+     */
+    PageInfo<Blog> indexListByType(int nowPage, int pageNum, Long typeId);
 
     /**
      * 根据条件分页查询博客数据
@@ -61,4 +72,23 @@ public interface BlogService {
      * @return
      */
     PageInfo<Blog> searchBlogList(String query,int nowPage, int pageNum);
+
+    /**
+     * 前台，获取博客详情
+     * @param id
+     * @return
+     */
+    Blog getBlogDetail(Long id);
+
+    /**
+     * 博客的 分组
+     * @return
+     */
+    Map<String, List<Blog>> archiveBlog();
+
+    /**
+     * 博客总数
+     * @return
+     */
+    Integer countBlog();
 }
