@@ -58,6 +58,7 @@ public class IndexController {
                          Model model) {
         PageInfo<Blog> blogPageInfo = blogService.searchBlogList(query,nowPage, pageNum);
         model.addAttribute("page",blogPageInfo);
+        model.addAttribute("query",query);
         return "search";
     }
 

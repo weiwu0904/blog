@@ -19,6 +19,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
         // 映射后台首页，登陆成功后跳转
         registry.addViewController("/admin/index").setViewName("/admin/index");
         registry.addViewController("/admin/tags").setViewName("/admin/tags");
+
+        // 关于我
+        registry.addViewController("/about").setViewName("/about");
     }
 
     @Override
