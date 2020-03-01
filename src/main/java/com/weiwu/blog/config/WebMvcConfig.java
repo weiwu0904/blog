@@ -12,16 +12,16 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         //后台登陆页
-        registry.addViewController("/admin").setViewName("/admin/login");
-        registry.addViewController("/admin/").setViewName("/admin/login");
-        registry.addViewController("/admin/login").setViewName("/admin/login");
+        registry.addViewController("/admin").setViewName("admin/login");
+        registry.addViewController("/admin/").setViewName("admin/login");
+        registry.addViewController("/admin/login").setViewName("admin/login");
 
         // 映射后台首页，登陆成功后跳转
-        registry.addViewController("/admin/index").setViewName("/admin/index");
-        registry.addViewController("/admin/tags").setViewName("/admin/tags");
+        registry.addViewController("/admin/index").setViewName("admin/index");
+        registry.addViewController("/admin/tags").setViewName("admin/tags");
 
         // 关于我
-        registry.addViewController("/about").setViewName("/about");
+        registry.addViewController("/about").setViewName("about");
     }
 
     @Override

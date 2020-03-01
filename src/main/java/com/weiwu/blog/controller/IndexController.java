@@ -68,6 +68,9 @@ public class IndexController {
 
         Blog blog = blogService.getBlogDetail(id);
         model.addAttribute("blog",blog);
+
+        /// 设置浏览次数+1
+        blogService.updateBlogViews(id);
         return "blog";
     }
 

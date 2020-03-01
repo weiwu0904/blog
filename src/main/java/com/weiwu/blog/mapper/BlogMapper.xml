@@ -54,8 +54,8 @@
             `comment_flag`,
             `published_falg`,
             `recommend_flag`,
-            `type_id`,
-            `user_id`,
+            `type_id` AS typeId,
+            `user_id` AS userId,
             `description`,
             `update_time`,
             `create_time`
@@ -238,6 +238,10 @@
          WHERE type.id = #{typeId}
         ORDER BY blog.views DESC, blog.update_time DESC
     </select>
+
+    <update id="updateBlogViews" parameterType="long">
+        UPDATE t_blog SET views = views + 1 WHERE id = #{id}
+    </update>
 
 
 </mapper>

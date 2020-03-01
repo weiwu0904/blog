@@ -10,6 +10,7 @@
         <result column="email" property="email"/>
         <result column="content" property="content"/>
         <result column="avatar" property="avatar"/>
+        <result column="adminComment" property="adminComment"/>
         <result column="createTime" property="createTime"/>
         <association property="blog" javaType="com.weiwu.blog.domain.Blog">
             <id column="blogId" property="id"/>
@@ -20,6 +21,7 @@
             <result column="parentEmail" property="email"/>
             <result column="parentContent" property="content"/>
             <result column="parentAvatar" property="avatar"/>
+            <result column="parentComment" property="adminComment"/>
             <result column="parentCreateTime" property="createTime"/>
         </association>
         <association property="atComment" javaType="com.weiwu.blog.domain.Comment">
@@ -28,6 +30,7 @@
             <result column="atEmail" property="email"/>
             <result column="atContent" property="content"/>
             <result column="atAvatar" property="avatar"/>
+            <result column="atAdminComment" property="adminComment"/>
             <result column="atCreateTime" property="createTime"/>
         </association>
     </resultMap>
@@ -39,6 +42,7 @@
             c.email AS email,
             c.content AS content,
             c.avatar AS avatar,
+            c.admin_comment AS adminComment,
             c.create_time AS createTime,
             c.blog_id AS blogId,
             pc.id AS parentId,
@@ -46,12 +50,14 @@
             pc.email AS parentEmail,
             pc.content AS parentContent,
             pc.avatar AS parentAvatar,
+            pc.admin_comment AS parentAdminComment,
             pc.create_time AS parentCreateTime,
             atc.id AS atId,
             atc.nickname AS atNickname,
             atc.email AS atEmail,
             atc.content AS atContent,
             atc.avatar AS atAvatar,
+            atc.admin_comment AS atCAdminComment,
             atc.create_time AS atCreateTime
         FROM
             t_comment c

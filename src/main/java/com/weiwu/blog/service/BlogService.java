@@ -91,4 +91,9 @@ public interface BlogService {
      * @return
      */
     Integer countBlog();
+
+    /**
+     * 增加浏览次数1
+     */
+    void updateBlogViews(Long id);
 }

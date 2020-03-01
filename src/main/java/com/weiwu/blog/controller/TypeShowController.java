@@ -32,7 +32,7 @@ public class TypeShowController {
                         Long id,
                         Model model) {
         List<Type> types = typeService.indexTypeTopList(1,1000).getList();
-        if (id == null) {
+        if (id == null && types.size() > 0) {
            id = types.get(0).getId();
         }
 

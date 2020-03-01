@@ -46,7 +46,7 @@ public class TypeController {
         // 新创建一个空的type，保证前端取到的值不为空
         Type type = typeService.getById(id);
         model.addAttribute("type",type);
-        return "/admin/types-input";
+        return "admin/types-input";
     }
 
     // 跳转到 新增 分类页面
@@ -54,7 +54,7 @@ public class TypeController {
     public String input(Model model) {
         // 新创建一个空的type，保证前端取到的值不为空
         model.addAttribute("type",new Type());
-        return "/admin/types-input";
+        return "admin/types-input";
     }
 
     // 提交 新增分类或者编辑分类的请求
@@ -63,7 +63,7 @@ public class TypeController {
                            RedirectAttributes redirectAttributes,
                            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "/admin/types-input";
+            return "admin/types-input";
         }
         /// 编辑
         if (type.getId() != null) {

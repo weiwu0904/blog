@@ -42,7 +42,7 @@ public class TagController {
                         Model model) {
         Tag tag = tagService.getTag(id);
         model.addAttribute("tag",tag);
-        return "/admin/tags-input";
+        return "admin/tags-input";
     }
 
     // 跳转到 新增 分类页面
@@ -50,7 +50,7 @@ public class TagController {
     public String input(Model model) {
         // 新创建一个空的type，保证前端取到的值不为空
         model.addAttribute("tag",new Tag());
-        return "/admin/tags-input";
+        return "admin/tags-input";
     }
 
     // 提交 新增分类或者编辑分类的请求
@@ -59,7 +59,7 @@ public class TagController {
                            RedirectAttributes redirectAttributes,
                            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "/admin/tags-input";
+            return "admin/tags-input";
         }
         /// 编辑
         if (tag.getId() != null) {

@@ -4,9 +4,11 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.weiwu.blog.domain.Blog;
 import com.weiwu.blog.domain.Tag;
+import com.weiwu.blog.domain.Type;
 import com.weiwu.blog.mapper.BlogMapper;
 import com.weiwu.blog.mapper.BlogTagMapper;
 import com.weiwu.blog.mapper.TagMapper;
+import com.weiwu.blog.mapper.TypeMapper;
 import com.weiwu.blog.req.AdminBlogReq;
 import com.weiwu.blog.service.BlogService;
 import com.weiwu.blog.uitl.MarkdownUtils;
@@ -35,6 +37,9 @@ public class BlogServiceImpl implements BlogService {
     @Resource
     private TagMapper tagMapper;
 
+    @Resource
+    private TypeMapper typeMapper;
+
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, isolation = Isolation.READ_COMMITTED)
     public Blog getBlog(Long id) {
@@ -43,6 +48,10 @@ public class BlogServiceImpl implements BlogService {
         // 查询tag
         List<Tag> tagList = tagMapper.getTagByBlogId(id);
         blog.setTagList(tagList);
+        // 查询分类
+        Type type = typeMapper.getById(blog.getType().getId());
+        blog.setType(type);
+
         blog.init();
 
         return blog;
@@ -149,5 +158,10 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public Integer countBlog() {
         return blogMapper.getBlogCount();
+    }
+
+    @Override
+    public void updateBlogViews(Long id) {
+        blogMapper.updateBlogViews(id);
     }
 }

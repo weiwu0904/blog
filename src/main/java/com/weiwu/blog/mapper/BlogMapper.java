@@ -95,4 +95,9 @@ public interface BlogMapper {
      * @return
      */
     List<Blog> indexListByType(Long typeId);
+
+    /**
+     * 增加博客次数1
+     */
+    void updateBlogViews(Long id);
 }
