@@ -32,7 +32,7 @@ public class LogAspect {
     /**
      * 定义切面
      */
-    @Pointcut("execution(* com.weiwu.blog.controller.*.*(..))")
+    @Pointcut("execution(* com.weiwu.blog.controller..*.*(..))")
     private void pt() {
     }
 

@@ -13,13 +13,11 @@ import com.weiwu.blog.req.AdminBlogReq;
 import com.weiwu.blog.service.BlogService;
 import com.weiwu.blog.uitl.MarkdownUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -149,6 +147,7 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
     public Map<String, List<Blog>> archiveBlog() {
         List<String> years = blogMapper.findGroupYear();
         Map<String, List<Blog>> map = new LinkedHashMap<>();
@@ -159,11 +158,13 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
     public Integer countBlog() {
         return blogMapper.getBlogCount();
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void updateBlogViews(Long id) {
         blogMapper.updateBlogViews(id);
     }
