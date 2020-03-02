@@ -46,7 +46,7 @@
             COUNT( * ) AS blogCount
         FROM
             t_blog blog
-            LEFT JOIN t_type type ON type.id = blog.type_id
+            RIGHT JOIN t_type type ON type.id = blog.type_id
         GROUP BY
             blog.type_id
         ORDER BY

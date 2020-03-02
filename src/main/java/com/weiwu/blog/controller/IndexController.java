@@ -38,12 +38,12 @@ public class IndexController {
 
         PageInfo<Blog> blogPageInfo = blogService.indexList(page, PageConstant.DEFAULT_PAGE_SIZE);
         PageInfo<Type> typePageInfo = typeService.indexTypeTopList(1, 6);
-        PageInfo<Tag> tagPageInfo = tagService.indexTagTopList(1, 10);
+//        PageInfo<Tag> tagPageInfo = tagService.indexTagTopList(1, 10);
         PageInfo<Blog> recommendBlogPageInfo = blogService.indexRecommendBlogList(1, 10);
 
         model.addAttribute("page",blogPageInfo);
         model.addAttribute("types",typePageInfo.getList());
-        model.addAttribute("tags",tagPageInfo.getList());
+//        model.addAttribute("tags",tagPageInfo.getList());
         return "index";
     }
 
