@@ -38,7 +38,7 @@ mybatis:
 
 logging:
   file:
-    name: blog/blog.log
+    name: logs/blog.log
   level:
     com.weiwu.blog.mapper: debug
 

@@ -19,7 +19,7 @@ target/
 *.iml
 *.ipr
 target
-log
+logs
 .DS_Store
 
 ### NetBeans ###
