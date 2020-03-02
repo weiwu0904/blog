@@ -7,7 +7,6 @@ import com.weiwu.blog.exception.ServiceException;
 import com.weiwu.blog.mapper.TypeMapper;
 import com.weiwu.blog.service.TypeService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +20,7 @@ public class TypeServiceImpl implements TypeService {
     private TypeMapper typeMapper;
 
     @Override
-    @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public Type saveType(Type type)  throws ServiceException {
         Type t = typeMapper.getTypeByName(type.getName());
         if (t != null) {
@@ -32,14 +31,14 @@ public class TypeServiceImpl implements TypeService {
     }
 
     @Override
-    @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.SUPPORTS)
+    @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
     public Type getById(Long id) {
         Type type = typeMapper.getById(id);
         return type;
     }
 
     @Override
-    @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.SUPPORTS)
+    @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
     public PageInfo<Type> list(int page, int pageNum) {
         PageHelper.startPage(page, pageNum);
         List<Type> list = typeMapper.list();
@@ -48,24 +47,26 @@ public class TypeServiceImpl implements TypeService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
     public List<Type> listAll() {
         return typeMapper.list();
     }
 
     @Override
-    @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.SUPPORTS)
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public Type updateType(Type type) {
         typeMapper.updateType(type);
         return type;
     }
 
     @Override
-    @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void deleteType(Long id) {
         typeMapper.deleteType(id);
     }
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
     public PageInfo<Type> indexTypeTopList(int nowPage, int pageNum) {
         PageHelper.startPage(nowPage, pageNum);
         List<Type> list = typeMapper.indexTypeTopList();

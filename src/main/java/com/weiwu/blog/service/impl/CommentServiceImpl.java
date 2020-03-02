@@ -3,12 +3,12 @@ package com.weiwu.blog.service.impl;
 import com.weiwu.blog.domain.Comment;
 import com.weiwu.blog.mapper.CommentMapper;
 import com.weiwu.blog.service.CommentService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,6 +19,7 @@ public class CommentServiceImpl implements CommentService {
     private CommentMapper commentMapper;
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
     public List<Comment> getCommentsByBlogId(Long id) {
         List<Comment> comments = commentMapper.listByBlogId(id);
         // 构建评论之间的关系

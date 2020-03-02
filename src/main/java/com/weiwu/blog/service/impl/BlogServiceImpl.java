@@ -41,7 +41,7 @@ public class BlogServiceImpl implements BlogService {
     private TypeMapper typeMapper;
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, isolation = Isolation.READ_COMMITTED)
+    @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
     public Blog getBlog(Long id) {
         Blog blog = blogMapper.getBlogById(id);
 
@@ -58,7 +58,7 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, isolation = Isolation.READ_COMMITTED)
+    @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
     public PageInfo<Blog> indexList(int nowPage, int pageNum) {
         PageHelper.startPage(nowPage, pageNum);
         List<Blog> blogListVOList = blogMapper.indexList();
@@ -67,6 +67,7 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
     public PageInfo<Blog> indexListByType(int nowPage, int pageNum, Long typeId) {
         PageHelper.startPage(nowPage, pageNum);
         List<Blog> blogListVOList = blogMapper.indexListByType(typeId);
@@ -76,7 +77,7 @@ public class BlogServiceImpl implements BlogService {
 
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, isolation = Isolation.READ_COMMITTED)
+    @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
     public PageInfo<Blog> adminListByReq(int nowPage, int pageNum, AdminBlogReq req) {
         PageHelper.startPage(nowPage, pageNum);
         List<Blog> list = blogMapper.listByAdminBlogReq(req);
@@ -86,7 +87,7 @@ public class BlogServiceImpl implements BlogService {
 
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public Blog saveBlog(Blog blog) {
 
         blog.setFlag("原创");
@@ -101,7 +102,7 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void updateBlog(Blog blog) {
         blog.setUpdateTime(LocalDateTime.now());
         blogMapper.updateBlog(blog);
@@ -113,12 +114,13 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public int deleteBlog(Long id) {
         return blogMapper.deleteBlog(id);
     }
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
     public PageInfo<Blog> indexRecommendBlogList(int nowPage, int pageNum) {
         PageHelper.startPage(nowPage, pageNum);
         List<Blog> list = blogMapper.indexRecommendBlogList();
@@ -127,6 +129,7 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
     public PageInfo<Blog> searchBlogList(String query, int nowPage, int pageNum) {
         PageHelper.startPage(nowPage, pageNum);
         List<Blog> list = blogMapper.searchBlogList(query);
@@ -135,7 +138,7 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, isolation = Isolation.READ_COMMITTED)
+    @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
     public Blog getBlogDetail(Long id) {
         Blog blog = blogMapper.getBlogDetailById(id);
         List<Tag> tagList = tagMapper.getTagByBlogId(id);
