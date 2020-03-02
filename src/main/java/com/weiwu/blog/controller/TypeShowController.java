@@ -1,6 +1,7 @@
 package com.weiwu.blog.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.weiwu.blog.constant.PageConstant;
 import com.weiwu.blog.domain.Blog;
 import com.weiwu.blog.domain.Type;
 import com.weiwu.blog.service.BlogService;
@@ -27,16 +28,24 @@ public class TypeShowController {
     private BlogService blogService;
 
     @GetMapping("/types")
-    public String types(@RequestParam(name = "nowPage", defaultValue = "1")Integer nowPage,
-                        @RequestParam(name = "pageNum", defaultValue = "10")Integer pageNum,
-                        Long id,
-                        Model model) {
-        List<Type> types = typeService.indexTypeTopList(1,1000).getList();
-        if (id == null && types.size() > 0) {
-           id = types.get(0).getId();
+    public String types(Model model) {
+        return typesPage(0L, PageConstant.DEFAULT_PAGE, model);
+    }
+
+    @GetMapping("/types/{id}/{page}")
+    public String typesPage(@PathVariable Long id,
+                            @PathVariable int page,
+                            Model model) {
+        List<Type> types = typeService.indexTypeTopList(1, PageConstant.PAGE_SIZE_MAX).getList();
+
+        if ((id == null || id == 0) && types.size() > 0) {
+            id = types.get(0).getId();
+        }
+        if (page == 0) {
+            page = PageConstant.DEFAULT_PAGE;
         }
 
-        PageInfo<Blog> blogPage = blogService.indexListByType(nowPage, pageNum, id);
+        PageInfo<Blog> blogPage = blogService.indexListByType(page, PageConstant.DEFAULT_PAGE_SIZE, id);
 
         model.addAttribute("types", types);
         model.addAttribute("page", blogPage);

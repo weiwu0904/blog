@@ -20,6 +20,7 @@ target/
 *.ipr
 target
 log
+.DS_Store
 
 ### NetBeans ###
 /nbproject/private/

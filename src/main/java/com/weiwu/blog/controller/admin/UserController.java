@@ -11,13 +11,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 @Controller
-@RequestMapping("admin")
+@RequestMapping("/admin")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @PostMapping("doLogin")
+    @PostMapping("/doLogin")
     public String doLogin(String username,
                           String password,
                           HttpSession session,

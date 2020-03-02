@@ -24,7 +24,7 @@
 
       <div class="ui attached segment m-padded-tb-large">
         <div class="ui labeled button m-margin-tb-tiny" th:each="type : ${types}">
-          <a href="#" th:href="@{'/types?id='+${type.id}}" class="ui basic  button" th:classappend="${type.id==activeTypeId} ? 'teal'" th:text="${type.name}">思考与感悟</a>
+          <a href="#" th:href="@{'/types/'+${type.id}+'/1'}" class="ui basic  button" th:classappend="${type.id==activeTypeId} ? 'teal'" th:text="${type.name}">思考与感悟</a>
           <div class="ui basic  left pointing label" th:classappend="${type.id==activeTypeId} ? 'teal'" th:text="${type.blogCount}">24</div>
         </div>
       </div>
@@ -70,10 +70,10 @@
       <div class="ui bottom attached segment" th:if="${page.pages}>1">
         <div class="ui middle aligned two column grid">
           <div class="column">
-            <a href="#" th:href="@{'/types?id='+${activeTypeId}+'&nowPage='+${page.prePage}}"  th:if="${page.hasPreviousPage}" class="ui mini teal basic button">上一页</a>
+            <a href="#" th:href="@{'/types/'+${activeTypeId}+'/'+${page.prePage}}"  th:if="${page.hasPreviousPage}" class="ui mini teal basic button">上一页</a>
           </div>
           <div class="right aligned column">
-            <a href="#" th:href="@{'/types?id='+${activeTypeId}+'&nowPage='+${page.nextPage}}"  th:if="${page.hasNextPage}" class="ui mini teal basic button">下一页</a>
+            <a href="#" th:href="@{'/types/'+${activeTypeId}+'/'+${page.nextPage}}"   th:if="${page.hasNextPage}" class="ui mini teal basic button">下一页</a>
           </div>
         </div>
       </div>

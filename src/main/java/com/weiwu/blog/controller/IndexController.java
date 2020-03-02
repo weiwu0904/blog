@@ -1,6 +1,7 @@
 package com.weiwu.blog.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.weiwu.blog.constant.PageConstant;
 import com.weiwu.blog.domain.Blog;
 import com.weiwu.blog.domain.Tag;
 import com.weiwu.blog.domain.Type;
@@ -28,19 +29,14 @@ public class IndexController {
 
 
     @GetMapping("/")
-    String index(@RequestParam(name = "nowPage",defaultValue = "1") int nowPage,
-                 @RequestParam(name = "pageNum", defaultValue = "10") int pageNum,
-                 Model model) {
-
-        return indexPage(nowPage,pageNum,model);
+    String index(Model model) {
+        return indexPage(PageConstant.DEFAULT_PAGE,model);
     }
 
-    @GetMapping("/index")
-    String indexPage(@RequestParam(name = "nowPage",defaultValue = "1") int nowPage,
-                     @RequestParam(name = "pageNum", defaultValue = "10") int pageNum,
-                     Model model) {
+    @GetMapping("/index/{page}")
+    String indexPage(@PathVariable int page, Model model) {
 
-        PageInfo<Blog> blogPageInfo = blogService.indexList(nowPage, pageNum);
+        PageInfo<Blog> blogPageInfo = blogService.indexList(page, PageConstant.DEFAULT_PAGE_SIZE);
         PageInfo<Type> typePageInfo = typeService.indexTypeTopList(1, 6);
         PageInfo<Tag> tagPageInfo = tagService.indexTagTopList(1, 10);
         PageInfo<Blog> recommendBlogPageInfo = blogService.indexRecommendBlogList(1, 10);
