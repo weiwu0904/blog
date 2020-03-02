@@ -41,14 +41,14 @@
 
     <select id="indexTypeTopList" resultMap="baseTypeMap">
         SELECT
-            blog.type_id AS id,
+            type.id AS id,
             type.`name` AS `name`,
-            COUNT( * ) AS blogCount
+            COUNT( blog.id ) AS blogCount
         FROM
-            t_blog blog
-            RIGHT JOIN t_type type ON type.id = blog.type_id
+            t_type type
+            LEFT JOIN t_blog blog ON type.id = blog.type_id
         GROUP BY
-            blog.type_id
+            type.id
         ORDER BY
             blogCount DESC
     </select>

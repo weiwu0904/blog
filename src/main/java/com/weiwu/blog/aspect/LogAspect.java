@@ -42,6 +42,8 @@ public class LogAspect {
 
         logger.info("=========请求开始=========");
 
+        long start = System.currentTimeMillis();
+
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest req = requestAttributes.getRequest();
         String url = req.getRequestURL().toString();
@@ -63,6 +65,9 @@ public class LogAspect {
         Object res =  pjp.proceed();
 
         logger.info("result：{}",res);
+
+        long end = System.currentTimeMillis();
+        logger.info("=========请求耗时：{}========",end - start);
         logger.info("=========请求结束=========");
         return res;
     }
