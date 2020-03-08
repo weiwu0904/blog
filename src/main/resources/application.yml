@@ -10,7 +10,6 @@ spring:
     name: blog
   thymeleaf:
     mode: HTML
-    cache: false
 
   # 配置数据源信息
   datasource:  # 数据源类型：HikariCP   # 数据源的相关配置
@@ -37,7 +36,5 @@ mybatis:
 
 logging:
   file:
-    name: log/blog.log
-  level:
-    com.weiwu.blog.mapper: debug
+    name: /home/log/blog.log
 
