@@ -13,22 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @EnableAspectJAutoProxy
 public class BlogApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(BlogApplication.class, args);
     }
-
 }
-
-
-//public class BlogApplication extends SpringBootServletInitializer {
-//
-//    public static void main(String[] args) {
-//        SpringApplication.run(BlogApplication.class, args);
-//    }
-//
-//    @Override
-//    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-//        return builder.sources(BlogApplication.class);
-//    }
-//}
